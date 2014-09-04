@@ -19,4 +19,17 @@ func main() {
 		total += y[i]
 	}
 	fmt.Println(total/5)
+
+	for j := 0; j < len(y); j++ {
+		total += y[j]
+	}
+	fmt.Println(total / float64(len(x)))
+
+	for _, value := range y {
+		total += value
+	}
+	fmt.Println(total / float64(len(x)))
+
+	z := [5]float64{ 98, 92, 77, 82, 83, }
+	fmt.Println(z)
 }
