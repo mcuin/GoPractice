@@ -49,6 +49,12 @@ func second(){
 }
 
 func main() {
+	defer func() {
+		str := recover()
+		fmt.Println(str)
+	}()
+	panic("PANIC")
+	
 	xs := []float64{98, 93, 77, 82, 83}
 	fmt.Println(average(xs))
 
