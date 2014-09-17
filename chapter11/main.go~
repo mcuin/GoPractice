@@ -1,8 +1,11 @@
 package main
 
 import "fmt"
+<<<<<<< HEAD
 import "~/Documents/Go/chapter11/math"
-
+=======
+import "chapter11/math"
+>>>>>>> 5358dd52dbae6e61c29a310c728a6a76bdcc64af
 
 func main() {
 	xs := float64{1,2,3,4,}
