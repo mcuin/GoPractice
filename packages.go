@@ -2,9 +2,43 @@ package main
 
 import ("fmt"
 	"strings"
-	"os"
-	"io/ioutil"
-	"path/filepath")
+	//"os"
+	//"io/ioutil"
+	//"path/filepath"
+	"container/list"
+	"sort")
+
+type Person struct {
+		Name string
+		Age int
+	}
+
+type ByName []Person
+type ByAge []Person
+
+func(this ByName) Len() int {
+	return len(this)
+}
+
+func(this ByName) Less(i, j int) bool {
+	return this[i].Name < this[j].Name
+}
+
+func(this ByName) Swap(i, j int) {
+	this[i], this[j] = this[j], this[i]
+}
+
+func(this ByAge) Len() int {
+	return len(this)
+}
+
+func(this ByAge) Less(i, j int) bool {
+	return this[i].Age < this[j].Age
+}
+
+func(this ByAge) Swap(i, j int) {
+	this[i], this[j] = this[j], this[i]
+}
 
 func main() {
 	fmt.Println(
@@ -21,7 +55,7 @@ func main() {
 		strings.ToUpper("test"),
 	)
 	
-	file, err := os.Open("test.txt")
+	/*file, err := os.Open("test.txt")
 	if err != nil {
 		fmt.Println("Error in open")
 		return
@@ -69,7 +103,7 @@ func main() {
 
 	fileInfos, err := dir.Readdir(-1)
 	if err != nil {
-		fmt.Println("Error on reading")
+		err := errors.New("error message")
 		return
 	}
 
@@ -80,5 +114,26 @@ func main() {
 	filepath.Walk(".", func(path string, info os.FileInfo, err error) error {
 		fmt.Println(path)
 		return nil
-	})
+	})*/
+
+	var x list.List
+	x.PushBack(1)
+	x.PushBack(2)
+	x.PushBack(3)
+
+	for e := x.Front(); e != nil; e = e.Next() {
+		fmt.Println(e.Value.(int))
+	}
+
+	kids := []Person {
+		{"Jill", 9},
+		{"Jack", 10},
+	}
+
+	sort.Sort(ByName(kids))
+	fmt.Println(kids) 
+	sort.Sort(ByAge(kids))
+	fmt.Println(kids)
+
+	
 }
