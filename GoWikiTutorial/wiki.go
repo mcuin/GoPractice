@@ -1,9 +1,11 @@
 package main
 
 import (
+	"flag"
 	"html/template"
-	"fmt"
 	"io/ioutil"
+	"log"
+	"net"
 	"net/http"
 	"regexp"
 )
@@ -13,8 +15,9 @@ type Page struct{
 	Body []byte
 }
 
-var templates = template.Must(template.ParseFiles("edit,html", "view.html"))
+var templates = template.Must(template.ParseFiles("edit.html", "view.html"))
 var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$")
+var addr = flag.Bool("addr", false, "find open address and print to final-port.txt")
 
 func (p *Page) save() error {
 	filename := p.Title + ".txt"
@@ -49,7 +52,7 @@ func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 
 func makeHandler(fn func (http.ResponseWriter, *http.Request, string)) http.HandlerFunc  {
 	return func(w http.ResponseWriter, r *http.Request) {
-		m := validPath.FindStringSunmatch(r.URL.Path)
+		m := validPath.FindStringSubmatch(r.URL.Path)
 		if m == nil {
 			http.NotFound(w, r)
 			return
@@ -77,7 +80,7 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
 
 func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
 	body := r.FormValue("body")
-	p := &Page(Title: title, Body: []byte(body))
+	p := &Page{Title: title, Body: []byte(body)}
 	err := p.save()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
