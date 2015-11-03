@@ -48,6 +48,16 @@ func local(city string) (string, string) {
 	return region, continent
 }
 
+type Artist struct {
+	aName, genre string
+	songs        int
+}
+
+func newRelease(a *Artist) int {
+	a.songs++
+	return a.songs
+}
+
 func main() {
 	name3, location3 := "Prince Obyron", "Dorne"
 	age3 := 32
@@ -63,5 +73,12 @@ func main() {
 	fmt.Println(add(42, 13))
 
 	region, continent := local("Santa Monica")
-	fmt.Printf("Matt lives in %s, %s", region, continent)
+	fmt.Printf("Matt lives in %s, %s\n", region, continent)
+
+	//client := &http.Client{}
+	//resp, err := client.Get("http://gobootcamp.com")
+
+	me := &Artist{aName: "Matt", genre: "Electronic", songs: 42}
+	fmt.Printf("%s released song %d\n", me.aName, newRelease(me))
+	fmt.Printf("%s has a total of %d songs", me.aName, me.songs)
 }
