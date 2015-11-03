@@ -3,6 +3,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 )
 
 var (
@@ -36,4 +37,6 @@ func main() {
 	fmt.Println(greeting)
 	fmt.Println(Pi)
 	fmt.Println(Truth)
+
+	fmt.Println(math.Pi)
 }
