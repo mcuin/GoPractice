@@ -28,6 +28,26 @@ const (
 	Small                    = Big >> 99
 )
 
+func add(x, y int) int {
+	return x + y
+}
+
+func local(city string) (string, string) {
+	var region string
+	var continent string
+
+	switch city {
+	case "Los Angeles", "LA", "Santa Monica":
+		region, continent = "California", "North America"
+	case "New York City", "New York", "NYC":
+		region, continent = "New York", "North America"
+	default:
+		region, continent = "Unknown", "Unknown"
+	}
+
+	return region, continent
+}
+
 func main() {
 	name3, location3 := "Prince Obyron", "Dorne"
 	age3 := 32
@@ -39,4 +59,9 @@ func main() {
 	fmt.Println(Truth)
 
 	fmt.Println(math.Pi)
+
+	fmt.Println(add(42, 13))
+
+	region, continent := local("Santa Monica")
+	fmt.Printf("Matt lives in %s, %s", region, continent)
 }
