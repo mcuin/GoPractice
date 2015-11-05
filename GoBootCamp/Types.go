@@ -64,8 +64,8 @@ type User struct {
 }
 
 type Player struct {
-	User
-	gameId int
+	*User
+	GameId int
 }
 
 func (u *User) Greeting() string {
@@ -75,6 +75,13 @@ func (u *User) Greeting() string {
 type Job struct {
 	command string
 	*log.Logger
+}
+
+func NewPlayer(id int, username, userLocation string, gameId int) *Player {
+	return &Player{
+		User:   &User{id, username, userLocation},
+		GameId: gameId,
+	}
 }
 
 func main2() {
@@ -123,13 +130,16 @@ func main2() {
 
 	fmt.Println(*x == *y)
 
-	player := Player{}
+	/*player := Player{}
 	player.id = 42
 	player.username = "Matt"
 	player.userLocation = "LA"
-	player.gameId = 90404
-	fmt.Println(player.Greeting())
+	player.GameId = 90404
+	fmt.Println(player.Greeting())*/
 
 	job := &Job{"demo", log.New(os.Stderr, "Job: ", log.Ldate)}
 	job.Print("Start now... ")
+
+	newPlayer := NewPlayer(42, "Matt", "LA", 90404)
+	fmt.Println(newPlayer.Greeting())
 }
