@@ -3,7 +3,9 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"math/cmplx"
+	"os"
 	"time"
 )
 
@@ -56,6 +58,25 @@ type Point struct {
 	X, Y int
 }
 
+type User struct {
+	id                     int
+	username, userLocation string
+}
+
+type Player struct {
+	User
+	gameId int
+}
+
+func (u *User) Greeting() string {
+	return fmt.Sprintf("Hello %s from %s", u.username, u.userLocation)
+}
+
+type Job struct {
+	command string
+	*log.Logger
+}
+
 func main2() {
 	const f = "%T(%v)\n"
 	fmt.Printf(f, goIsFun, goIsFun)
@@ -94,4 +115,21 @@ func main2() {
 
 	event.Date = time.Now()
 	fmt.Printf("Event on %s, location (%f, %f)\n", event.Date, event.Lat, event.Lon)
+
+	fmt.Println(p, q, r, t)
+
+	x := new(BootCamp)
+	y := &BootCamp{}
+
+	fmt.Println(*x == *y)
+
+	player := Player{}
+	player.id = 42
+	player.username = "Matt"
+	player.userLocation = "LA"
+	player.gameId = 90404
+	fmt.Println(player.Greeting())
+
+	job := &Job{"demo", log.New(os.Stderr, "Job: ", log.Ldate)}
+	job.Print("Start now... ")
 }
